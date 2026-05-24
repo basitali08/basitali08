@@ -15,6 +15,9 @@ Machine Learning for Healthcare · Biomedical NLP · Economic Forecasting · Mod
 ### 🇵🇰 [BazaarPulse AI — Pakistan Price Shock Predictor](https://github.com/basitali08/BazaarPulse-AI-)
 Multi-source AI intelligence system combining **XGBoost forecasting**, **NLP sentiment**, **anomaly detection** (Isolation Forest), and **geospatial risk mapping** to predict food price spikes across 16 Pakistan cities. End-to-end pipeline with interactive Streamlit dashboard. R² up to 0.92 on price forecasts.
 
+### 🧠 [Brain Tumor Detection & Grading AI](https://github.com/basitali08/brain-tumor-detection)
+ResNet18 transfer learning on MRI brain scans — **100% test accuracy** across 4 classes (glioma, meningioma, pituitary, no-tumor). Features tumor grading, size estimation, and interactive Streamlit dashboard with real-time diagnosis.
+
 ### 🏥 [Medical NLP with BioBERT](https://github.com/basitali08/medical-nlp-biomedical-bert)
 Fine-tuned **BioBERT** (biomedical transformer) on the **PubMed 20k RCT** benchmark — 77.8% accuracy, 0.95 ROC AUC. Classifies medical sentences into BACKGROUND / OBJECTIVE / METHODS / RESULTS / CONCLUSIONS. Includes TF-IDF baselines, confusion matrix analysis, and per-class breakdown.
 
@@ -28,6 +31,7 @@ Random Forest + XGBoost models trained on NASA landslide catalog data with rainf
 - [Deep Learning for Heart Disease](https://github.com/basitali08/deep-learning-heart-disease-) — PyTorch neural network with BatchNorm, Dropout, LR scheduling
 - [Heart Disease API Deployment](https://github.com/basitali08/heart-disease-api) — Production-ready FastAPI with Swagger docs and HTML form
 - [Exploratory Data Analysis](https://github.com/basitali08/healthcare-exploratory-analysis) — 10+ visualizations, missing value analysis, statistical insights
+- [Islamic School Management System](https://github.com/basitali08/islamic-school-ms-) — C# WPF .NET desktop application
 
 ---
 
