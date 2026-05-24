@@ -6,11 +6,14 @@
 ---
 
 ## 🧠 Research Focus
-Machine Learning for Healthcare · Biomedical NLP · Model Interpretability · Environmental ML
+Machine Learning for Healthcare · Biomedical NLP · Economic Forecasting · Model Interpretability · AI for Social Impact
 
 ---
 
 ## 📌 Featured Projects
+
+### 🇵🇰 [BazaarPulse AI — Pakistan Price Shock Predictor](https://github.com/basitali08/BazaarPulse-AI-)
+Multi-source AI intelligence system combining **XGBoost forecasting**, **NLP sentiment**, **anomaly detection** (Isolation Forest), and **geospatial risk mapping** to predict food price spikes across 16 Pakistan cities. End-to-end pipeline with interactive Streamlit dashboard. R² up to 0.92 on price forecasts.
 
 ### 🏥 [Medical NLP with BioBERT](https://github.com/basitali08/medical-nlp-biomedical-bert)
 Fine-tuned **BioBERT** (biomedical transformer) on the **PubMed 20k RCT** benchmark — 77.8% accuracy, 0.95 ROC AUC. Classifies medical sentences into BACKGROUND / OBJECTIVE / METHODS / RESULTS / CONCLUSIONS. Includes TF-IDF baselines, confusion matrix analysis, and per-class breakdown.
@@ -35,6 +38,7 @@ Random Forest + XGBoost models trained on NASA landslide catalog data with rainf
 ![PyTorch](https://img.shields.io/badge/-PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/-scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white)
 ![XGBoost](https://img.shields.io/badge/-XGBoost-FF6600?style=flat&logo=xgboost&logoColor=white)
+![Plotly](https://img.shields.io/badge/-Plotly-3F4F75?style=flat&logo=plotly&logoColor=white)
 ![Pandas](https://img.shields.io/badge/-Pandas-150458?style=flat&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/-NumPy-013243?style=flat&logo=numpy&logoColor=white)
 
@@ -48,6 +52,7 @@ Random Forest + XGBoost models trained on NASA landslide catalog data with rainf
 ![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/-Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)
 ![Git](https://img.shields.io/badge/-Git-F05032?style=flat&logo=git&logoColor=white)
+![Linux](https://img.shields.io/badge/-Linux-FCC624?style=flat&logo=linux&logoColor=black)
 ![Linux](https://img.shields.io/badge/-Linux-FCC624?style=flat&logo=linux&logoColor=black)
 
 ---
