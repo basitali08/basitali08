@@ -15,6 +15,9 @@ Machine Learning for Healthcare · Biomedical NLP · Economic Forecasting · Mod
 ### 🇵🇰 [BazaarPulse AI — Pakistan Price Shock Predictor](https://github.com/basitali08/BazaarPulse-AI-)
 Multi-source AI intelligence system combining **XGBoost forecasting**, **NLP sentiment**, **anomaly detection** (Isolation Forest), and **geospatial risk mapping** to predict food price spikes across 16 Pakistan cities. End-to-end pipeline with interactive Streamlit dashboard. R² up to 0.92 on price forecasts.
 
+### 🫁 [Lung Cancer Detection & Classification AI](https://github.com/basitali08/lung-cancer-detection)
+ResNet18 transfer learning on chest CT scans — classifies **adenocarcinoma, large cell carcinoma, squamous cell carcinoma, and normal** with 98% normal detection accuracy. Features clinical staging, treatment guidance, and interactive Streamlit dashboard. Built on the IQ-OTH/NCCD lung cancer dataset (999 CT images).
+
 ### 🧠 [Brain Tumor Detection & Grading AI](https://github.com/basitali08/brain-tumor-detection)
 ResNet18 transfer learning on MRI brain scans — **100% test accuracy** across 4 classes (glioma, meningioma, pituitary, no-tumor). Features tumor grading, size estimation, and interactive Streamlit dashboard with real-time diagnosis.
 
