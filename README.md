@@ -17,6 +17,10 @@ Real-time ANPR system: detects license plates from images using EasyOCR, matches
 ### 🧠 [Schizophrenia Drug Response Predictor](https://github.com/basitali08/schizophrenia-drug-predictor)
 Predicts the best antipsychotic drug (out of 5) from 15 patient features. **Random Forest: 74% accuracy, 0.92 AUC** — 3.7x better than random. Helps doctors skip trial-and-error.
 
+### 📝 [GitHub Profile README Generator](https://github.com/basitali08/profile-readme-generator)
+Enter any GitHub username → generates a beautiful profile README with stats, languages, projects, and badges. 4 themes. Live demo available.
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit-FF4B4B?logo=streamlit)](https://profile-readme-generator-basitali08.streamlit.app)
+
 ---
 
 ## 🔬 All Projects
