@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=700&size=28&duration=3000&pause=1000&color=00E5FF&center=true&vCenter=true&width=500&height=60&lines=%F0%9F%91%8B+Hi%2C+I'm+Basit+Ali;Data+Scientist+%26+ML+Researcher;AI+for+Drug+Discovery;Medical+Imaging+%26+Predictive+ML;Published+on+SSRN+%28Elsevier%29" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&duration=3000&pause=1000&color=00E5FF&center=true&vCenter=true&width=500&height=60&lines=%F0%9F%91%8B+Hi%2C+I'm+Basit+Ali;Data+Scientist+%26+ML+Researcher;AI+for+Drug+Discovery;Medical+Imaging+%26+Predictive+ML;Published+on+SSRN+%28Elsevier%29" alt="Typing SVG" />
 </div>
 
 <br>
@@ -16,7 +16,8 @@
 <br>
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=basitali08&theme=darkhub&no-frame=true&no-bg=true&column=4&title=Stars,Followers,Commits,PullRequest" width="600">
+  <img src="https://github-readme-stats.vercel.app/api?username=basitali08&show_icons=true&theme=tokyonight&hide_border=true&bg_color=00000000&count_private=true&include_all_commits=true&rank_icon=github" width="420">
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=basitali08&theme=tokyonight&hide_border=true&background=00000000" width="400">
 </div>
 
 ---
@@ -137,11 +138,10 @@ Enter any GitHub username → generates a beautiful profile README with stats, l
 
 ---
 
-## 📊 GitHub Stats
+## 📊 Languages
 
 <div align="center">
 
-![Basit's GitHub stats](https://github-readme-stats.vercel.app/api?username=basitali08&show_icons=true&theme=tokyonight&hide_border=true&bg_color=00000000)
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=basitali08&layout=compact&theme=tokyonight&hide_border=true&bg_color=00000000)
 
 </div>
