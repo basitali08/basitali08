@@ -16,8 +16,9 @@
 <br>
 
 <div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=basitali08&show_icons=true&theme=tokyonight&hide_border=true&bg_color=00000000&count_private=true&include_all_commits=true&rank_icon=github" width="420">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=basitali08&theme=tokyonight&hide_border=true&background=00000000" width="400">
+  <img src="https://img.shields.io/badge/SSRN_Published-Elsevier-FF6600?style=flat-square&labelColor=1a1a2e">
+  <img src="https://img.shields.io/badge/Projects-15%2B-00E5FF?style=flat-square&labelColor=1a1a2e">
+  <img src="https://img.shields.io/badge/Research-Neuron_Receptor-7C5CBF?style=flat-square&labelColor=1a1a2e">
 </div>
 
 ---
@@ -35,17 +36,12 @@ I design and deploy **end-to-end ML systems** — from synthetic data generation
 
 A benchmark study evaluating multi-class classification and regression approaches for predicting drug binding affinity across **5 neuron receptors**:
 
-<div align="center">
-
-| Receptor | Type | 
-|----------|------|
-| 🧬 Dopamine D2 | Multi-class |
-| 🧬 Serotonin 5-HT2A | 76.4% binary accuracy |
-| 🧬 GABA-A | Multi-class |
-| 🧬 NMDA | Multi-class |
-| 🧬 Mu-Opioid | R² = 0.49 |
-
-</div>
+| Receptor | Performance |
+|----------|-------------|
+| 🧬 Dopamine D2 | 47.7% multi-class accuracy (XGBoost) |
+| 🧬 Serotonin 5-HT2A | **76.4%** binary accuracy |
+| 🧬 GABA-A / NMDA / Mu-Opioid | Multi-class classification |
+| 📊 Regression | **R² = 0.49** for pIC50 |
 
 [![SSRN](https://img.shields.io/badge/Paper-SSRN-FF6600?style=for-the-badge&logo=researchgate&labelColor=1a1a2e)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6852319)
 [![DOI](https://img.shields.io/badge/DOI-10.2139/ssrn.6852319-0055FF?style=for-the-badge&labelColor=1a1a2e)](https://doi.org/10.2139/ssrn.6852319)
@@ -85,8 +81,6 @@ Enter any GitHub username → generates a beautiful profile README with stats, l
 
 ## 🔬 All Projects
 
-<div align="center">
-
 | Project | Tech | Performance |
 |---------|------|-------------|
 | [BazaarPulse AI](https://github.com/basitali08/BazaarPulse-AI-) | XGBoost, NLP, Streamlit | R² 0.92 |
@@ -103,8 +97,6 @@ Enter any GitHub username → generates a beautiful profile README with stats, l
 | [Cooperative Robotics ML](https://github.com/basitali08/cooperative-robotics-ml) | XGBoost, Streamlit | 98.4% accuracy |
 | [IIoT Intrusion Detection](https://github.com/basitali08/iiot-ids-research) | Anomaly Detection | Cybersecurity |
 | [Healthcare EDA](https://github.com/basitali08/healthcare-exploratory-analysis) | Pandas, Seaborn, Scipy | Statistical insights |
-
-</div>
 
 ---
 
@@ -130,7 +122,7 @@ Enter any GitHub username → generates a beautiful profile README with stats, l
 
 ## 🎓 Education
 
-**Abdul Wali Khan University Mardan (AWKUM)** — BSc Computer Science (2022–2026)
+**Abdul Wali Khan University Mardan (AWKUM)** — BSc Computer Science (2020–2024)
 
 ### Certifications
 - 🧠 **Artificial Intelligence** — Boston Institute of Analytics (Jan 2026)
@@ -138,11 +130,16 @@ Enter any GitHub username → generates a beautiful profile README with stats, l
 
 ---
 
-## 📊 Languages
+## 📊 GitHub Activity
 
 <div align="center">
 
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=basitali08&layout=compact&theme=tokyonight&hide_border=true&bg_color=00000000)
+| Metrics | Stats |
+|---------|-------|
+| ⭐ Public Repos | 20+ |
+| 🔬 Research Projects | ML, DL, NLP, Computer Vision |
+| 📄 Published Papers | 1 (SSRN Elsevier) |
+| 🎯 Focus Areas | Drug Discovery, Medical Imaging, Predictive Modeling |
 
 </div>
 
