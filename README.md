@@ -129,7 +129,7 @@ Enter any GitHub username → generates a beautiful profile README with stats, l
 
 ## 🎓 Education
 
-**Abdul Wali Khan University Mardan (AWKUM)** — BSc Computer Science (2020–2024)
+**Abdul Wali Khan University Mardan (AWKUM)** — BSc Computer Science (2022–2026)
 
 ### Certifications
 - 🧠 **Artificial Intelligence** — Boston Institute of Analytics (Jan 2026)
