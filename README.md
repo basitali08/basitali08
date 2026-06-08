@@ -41,6 +41,11 @@ Multi-class ML model predicting which brain receptor a drug binds to. **47.7% ac
 ### 🚗 [Vehicle Tracking & Hotlist Alert System](https://github.com/basitali08/vehicle-tracking-system)
 Real-time ANPR system: detects license plates using EasyOCR, matches against a hotlist, and plots detections on interactive Folium maps with color-coded alerts.
 
+### 🧠 [Brain Stroke Prediction](https://github.com/basitali08/brain-stroke-prediction)
+Predicts stroke risk from patient health data using Logistic Regression, Random Forest & XGBoost. **82.5% ROC AUC, 76% recall** with SMOTE-balanced data. Interactive **3D Streamlit dashboard** with Plotly gauges and radar charts.
+[![Dashboard](https://img.shields.io/badge/Dashboard-Streamlit-FF4B4B?logo=streamlit)](https://brain-stroke-prediction.streamlit.app)
+[![Notebook](https://img.shields.io/badge/Notebook-Jupyter-F37626?logo=jupyter)](https://github.com/basitali08/brain-stroke-prediction/blob/main/BrainStroke_Prediction.ipynb)
+
 ### 🧠 [Schizophrenia Drug Response Predictor](https://github.com/basitali08/schizophrenia-drug-predictor)
 Predicts the best antipsychotic drug (out of 5) from 15 patient features. **Random Forest: 74% accuracy, 0.92 AUC** — 3.7× better than random.
 
@@ -57,6 +62,7 @@ Enter any GitHub username → generates a beautiful profile README with stats, l
 | [BazaarPulse AI](https://github.com/basitali08/BazaarPulse-AI-) | XGBoost, NLP, Streamlit | R² 0.92 |
 | [Lung Cancer Detection](https://github.com/basitali08/lung-cancer-detection) | ResNet18, CT scans | 98% accuracy |
 | [Brain Tumor Detection](https://github.com/basitali08/brain-tumor-detection) | ResNet18, MRI | 100% test accuracy |
+| [Brain Stroke Prediction](https://github.com/basitali08/brain-stroke-prediction) | LogReg, RF, XGBoost, SMOTE, Streamlit 3D | 82.5% ROC AUC, 76% recall |
 | [Medical NLP (BioBERT)](https://github.com/basitali08/medical-nlp-biomedical-bert) | BioBERT, PubMed 20k | 77.8% accuracy, 0.95 AUC |
 | [Heart Disease ML](https://github.com/basitali08/-advanced-ml-heart-disease) | Optuna, SHAP | 91.8% accuracy, 0.96 AUC |
 | [Heart Disease API](https://github.com/basitali08/heart-disease-api) | FastAPI, Docker | Production API |
