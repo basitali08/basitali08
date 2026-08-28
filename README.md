@@ -2,6 +2,6 @@
 
 ### `basitali08@github ~ $ whoami`
 
-<img src="./test.svg" width="200" />
+<img src="./info-card.svg" width="480" />
 
 </div>
