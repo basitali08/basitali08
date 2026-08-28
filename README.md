@@ -31,7 +31,7 @@
 
 <p><b>Full Stack Developer · AI Builder · Open Source Contributor</b></p>
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-basitali08.github.io%2Fportfolio-0d1117?style=for-the-badge&logo=vercel&logoColor=white)](https://basitali08.github.io/portfolio/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-basit--ali--portfolio.vercel.app-0d1117?style=for-the-badge&logo=vercel&logoColor=white)](https://basit-ali-portfolio-two.vercel.app)
 [![GitHub](https://img.shields.io/badge/GitHub-basitali08-0d1117?style=for-the-badge&logo=github&logoColor=white)](https://github.com/basitali08)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-basit--ali--824851375-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/basit-ali-824851375)
 
