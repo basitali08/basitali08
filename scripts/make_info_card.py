@@ -42,15 +42,18 @@ def generate_info_card_svg() -> str:
         ("Stack:", CARD_CONFIG["stack"]),
         ("Focus:", CARD_CONFIG["current_focus"]),
         ("Learning:", CARD_CONFIG["learning"]),
-        ("&gt;", CARD_CONFIG["highlight1"]),
-        ("&gt;", CARD_CONFIG["highlight2"]),
+        (">", CARD_CONFIG["highlight1"]),
+        (">", CARD_CONFIG["highlight2"]),
     ]
 
     y_start = HEADER_HEIGHT + PADDING
     for i, (key, value) in enumerate(content):
         y = y_start + i * LINE_HEIGHT
-        lines.append(f'<text font-family="monospace" font-size="13" fill="{c["key"]}" font-weight="bold" x="{PADDING}" y="{y}">{key}</text>')
-        lines.append(f'<text font-family="monospace" font-size="13" fill="{c["value"]}" x="{PADDING + 80}" y="{y}">{value}</text>')
+        # Escape XML special characters
+        key_esc = key.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        value_esc = value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        lines.append(f'<text font-family="monospace" font-size="13" fill="{c["key"]}" font-weight="bold" x="{PADDING}" y="{y}">{key_esc}</text>')
+        lines.append(f'<text font-family="monospace" font-size="13" fill="{c["value"]}" x="{PADDING + 80}" y="{y}">{value_esc}</text>')
 
     lines.append(f'<line x1="{PADDING}" y1="{CARD_HEIGHT - PADDING}" x2="{CARD_WIDTH - PADDING}" y2="{CARD_HEIGHT - PADDING}" stroke="{c["border"]}" stroke-width="1"/>')
     lines.append('</svg>')
