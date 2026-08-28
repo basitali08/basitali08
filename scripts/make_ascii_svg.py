@@ -1,139 +1,142 @@
-#!/usr/bin/env python3
-"""Convert a prepped photo to an animated ASCII art SVG.
-
-The SVG features:
-- Monochrome light-gray characters
-- Row-by-row reveal animation with a typing cursor
-- No looping - plays once and freezes
 """
+Convert a portrait photo into a CLEAN, monochrome ASCII-art SVG that "types"
+itself in like a terminal, then holds.
 
+Monochrome is deliberate -- per-character rainbow color is what makes ASCII
+portraits look noisy. One fill color + a good density ramp + high contrast reads
+as neat and legible.
+
+GitHub renders SVGs embedded via <img> and runs their SMIL animations there.
+Each row is revealed with a left-to-right clip wipe plus a small block cursor
+riding the wipe edge, staggered top -> bottom, so the whole portrait prints
+once and freezes.
+
+    python scripts/prep_photo.py <photo> && python scripts/make_ascii_svg.py
+"""
+from PIL import Image, ImageEnhance, ImageOps, ImageFilter
+import html
+import os
 import sys
-from pathlib import Path
 
-import cv2
-import numpy as np
+HERE = os.path.dirname(os.path.abspath(__file__))
+SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "source-prepped.png")
+OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, "..", "avi-ascii.svg")
 
-# ASCII density ramp: bright (sparse) -> dark (dense)
-RAMP = " .`:-=+*cs#%@"
+COLS = 100
+ROWS = 53
+CELL_W = 8
+CELL_H = 15
+RAMP = " .`:-=+*cs#%@"  # bright(sparse) -> dark(dense); leading space clears bg
 
-# SVG dimensions
-WIDTH_CHARS = 100
-HEIGHT_CHARS = 53
-CHAR_WIDTH = 8
-CHAR_HEIGHT = 14
-SVG_WIDTH = WIDTH_CHARS * CHAR_WIDTH
-SVG_HEIGHT = HEIGHT_CHARS * CHAR_HEIGHT
+CONTRAST = 1.05
+BRIGHTNESS = 1.0
+GAMMA = 1.18          # >1 brightens mids -> face lands in sparser chars
+SHARPEN = False
+WHITE_FLOOR = 0.80    # luminance above this is forced to blank (space)
 
+PAD = 20
+TITLEBAR_H = 30
+STATUS_H = 30
+ART_W = COLS * CELL_W
+ART_H = ROWS * CELL_H
+CANVAS_W = ART_W + PAD * 2
+CANVAS_H = TITLEBAR_H + ART_H + STATUS_H + PAD
 
-def image_to_ascii(image_path: str) -> list[list[str]]:
-    """Convert image to ASCII character grid."""
-    img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    if img is None:
-        print(f"Error: Could not load image {image_path}")
-        sys.exit(1)
+BG = "#0d1117"
+BG2 = "#111722"
+FRAME = "#30363d"
+TITLE_TEXT = "#7d8590"
+INK = "#c9d1d9"      # the single ascii color
+CURSOR = "#c9d1d9"
 
-    # Resize to character grid dimensions
-    img = cv2.resize(img, (WIDTH_CHARS, HEIGHT_CHARS))
+ROW_DUR = 0.11
+STAGGER = 0.11       # == ROW_DUR -> a single cursor sweeping down
 
-    ascii_grid = []
-    for row in range(HEIGHT_CHARS):
-        ascii_row = []
-        for col in range(WIDTH_CHARS):
-            brightness = img[row, col]
-            # Map brightness to ramp index (inverted: bright = sparse)
-            ramp_idx = int((1 - brightness / 255) * (len(RAMP) - 1))
-            ramp_idx = max(0, min(ramp_idx, len(RAMP) - 1))
-            ascii_row.append(RAMP[ramp_idx])
-        ascii_grid.append(ascii_row)
+im = Image.open(SRC).convert("L")               # grayscale
+if SHARPEN:
+    im = im.filter(ImageFilter.UnsharpMask(radius=2, percent=140, threshold=2))
+im = ImageEnhance.Brightness(im).enhance(BRIGHTNESS)
+im = ImageEnhance.Contrast(im).enhance(CONTRAST)
+im = im.resize((COLS, ROWS), Image.LANCZOS)
+px = im.load()
 
-    return ascii_grid
+STATIC = bool(os.environ.get("STATIC"))  # emit frozen state for previews
 
+rows_txt = []
+for y in range(ROWS):
+    chars = []
+    for x in range(COLS):
+        lum = px[x, y] / 255.0
+        lum = pow(lum, GAMMA)
+        if lum >= WHITE_FLOOR:
+            chars.append(" ")
+            continue
+        idx = int((1.0 - lum) * (len(RAMP) - 1) + 0.5)
+        idx = max(0, min(len(RAMP) - 1, idx))
+        chars.append(RAMP[idx])
+    rows_txt.append("".join(chars))
 
-def escape_xml(char: str) -> str:
-    """Escape special XML characters."""
-    if char == "<":
-        return "&lt;"
-    elif char == ">":
-        return "&gt;"
-    elif char == "&":
-        return "&amp;"
-    elif char == '"':
-        return "&quot;"
-    elif char == "'":
-        return "&apos;"
-    return char
+art_top = TITLEBAR_H + PAD * 0.35
 
+parts = []
+parts.append(
+    f'<svg xmlns="http://www.w3.org/2000/svg" width="{CANVAS_W}" height="{CANVAS_H}" '
+    f'viewBox="0 0 {CANVAS_W} {CANVAS_H}" font-family="ui-monospace, SFMono-Regular, '
+    f'Menlo, Consolas, monospace">'
+)
+parts.append('<defs>'
+             f'<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">'
+             f'<stop offset="0" stop-color="{BG2}"/><stop offset="1" stop-color="{BG}"/>'
+             f'</linearGradient></defs>')
 
-def generate_svg(ascii_grid: list[list[str]]) -> str:
-    """Generate animated SVG from ASCII grid."""
-    svg_parts = []
+parts.append(f'<rect width="{CANVAS_W}" height="{CANVAS_H}" rx="12" fill="url(#bg)"/>')
+parts.append(f'<rect x="0.5" y="0.5" width="{CANVAS_W-1}" height="{CANVAS_H-1}" rx="12" '
+             f'fill="none" stroke="{FRAME}" stroke-width="1"/>')
 
-    # SVG header with styles
-    svg_parts.append(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}" width="{SVG_WIDTH}" height="{SVG_HEIGHT}">
-  <style>
-    @keyframes typing {{
-      from {{ clip-path: inset(0 100% 0 0); }}
-      to {{ clip-path: inset(0 0 0 0); }}
-    }}
-    @keyframes cursor {{
-      0%, 100% {{ opacity: 1; }}
-      50% {{ opacity: 0; }}
-    }}
-    .row {{
-      animation: typing 0.15s steps(20) forwards;
-      animation-delay: var(--delay);
-      clip-path: inset(0 100% 0 0);
-    }}
-    .row.revealed {{
-      clip-path: inset(0 0 0 0);
-    }}
-    .char {{
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      fill: #8b949e;
-    }}
-  </style>
-  <rect width="100%" height="100%" fill="#0d1117"/>
-''')
+parts.append(f'<line x1="0" y1="{TITLEBAR_H}" x2="{CANVAS_W}" y2="{TITLEBAR_H}" stroke="{FRAME}"/>')
+for i, dotcol in enumerate(["#ff5f56", "#ffbd2e", "#27c93f"]):
+    parts.append(f'<circle cx="{PAD + i*16}" cy="{TITLEBAR_H/2}" r="5" fill="{dotcol}"/>')
+parts.append(f'<text x="{CANVAS_W/2}" y="{TITLEBAR_H/2 + 4}" fill="{TITLE_TEXT}" font-size="12" '
+             f'text-anchor="middle">basitali08@github: ~$ ./portrait.sh</text>')
 
-    # Generate each row with animation delay
-    for row_idx, row in enumerate(ascii_grid):
-        delay = row_idx * 0.03  # 30ms stagger per row
-        y = row_idx * CHAR_HEIGHT + CHAR_HEIGHT - 2  # Baseline adjustment
+font_size = CELL_H * 0.86
+for ry, line in enumerate(rows_txt):
+    y = art_top + ry * CELL_H + CELL_H * 0.74
+    row_y = art_top + ry * CELL_H
+    delay = ry * STAGGER
+    safe = html.escape(line)
+    text = (f'<text xml:space="preserve" x="{PAD}" y="{y:.1f}" fill="{INK}" '
+            f'font-size="{font_size:.1f}" textLength="{ART_W}" lengthAdjust="spacing">{safe}</text>')
 
-        svg_parts.append(f'  <g class="row" style="--delay: {delay:.3f}s">')
+    if STATIC:
+        parts.append(text)
+        continue
 
-        for col_idx, char in enumerate(row):
-            if char.strip():  # Only render non-space characters
-                x = col_idx * CHAR_WIDTH
-                escaped = escape_xml(char)
-                svg_parts.append(f'    <text class="char" x="{x}" y="{y}">{escaped}</text>')
+    parts.append(
+        f'<clipPath id="r{ry}"><rect x="{PAD}" y="{row_y:.1f}" height="{CELL_H}" width="0">'
+        f'<animate attributeName="width" from="0" to="{ART_W}" begin="{delay:.3f}s" '
+        f'dur="{ROW_DUR:.2f}s" fill="freeze"/></rect></clipPath>'
+    )
+    parts.append(f'<g clip-path="url(#r{ry})">{text}</g>')
+    parts.append(
+        f'<rect y="{row_y+1:.1f}" width="{CELL_W}" height="{CELL_H-2}" fill="{CURSOR}" opacity="0">'
+        f'<animate attributeName="x" from="{PAD}" to="{PAD+ART_W}" begin="{delay:.3f}s" '
+        f'dur="{ROW_DUR:.2f}s" fill="freeze"/>'
+        f'<set attributeName="opacity" to="0.85" begin="{delay:.3f}s"/>'
+        f'<set attributeName="opacity" to="0" begin="{delay+ROW_DUR:.3f}s"/></rect>'
+    )
 
-        svg_parts.append('  </g>')
+status_line_y = TITLEBAR_H + ART_H + PAD * 0.35
+status_y = status_line_y + 19
+parts.append(f'<line x1="0" y1="{status_line_y:.1f}" x2="{CANVAS_W}" y2="{status_line_y:.1f}" stroke="{FRAME}"/>')
+parts.append(f'<text x="{PAD}" y="{status_y:.1f}" fill="{TITLE_TEXT}" font-size="13">'
+             f'basitali08@github:~$ whoami <tspan fill="{INK}">Basit Ali</tspan></text>')
+parts.append(f'<rect x="{PAD+196}" y="{status_y-12:.1f}" width="8" height="14" fill="{INK}">'
+             f'<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.51;1" '
+             f'dur="1s" repeatCount="indefinite"/></rect>')
 
-    svg_parts.append('</svg>')
-
-    return '\n'.join(svg_parts)
-
-
-def main():
-    image_path = "source-prepped.png"
-    if not Path(image_path).exists():
-        print(f"Error: {image_path} not found. Run prep_photo.py first.")
-        sys.exit(1)
-
-    print(f"Converting {image_path} to ASCII...")
-    ascii_grid = image_to_ascii(image_path)
-
-    print("Generating SVG...")
-    svg_content = generate_svg(ascii_grid)
-
-    output_path = "ascii-portrait.svg"
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(svg_content)
-
-    print(f"Saved ASCII portrait to {output_path}")
-
-
-if __name__ == "__main__":
-    main()
+parts.append("</svg>")
+svg = "".join(parts)
+with open(OUT, "w") as f:
+    f.write(svg)
+print("wrote", OUT, len(svg), "bytes;", CANVAS_W, "x", CANVAS_H)
