@@ -32,7 +32,7 @@ def generate_info_card_svg() -> str:
     # Header
     lines.append(f'<rect x="0" y="0" width="{CARD_WIDTH}" height="{HEADER_HEIGHT}" fill="{c["header_bg"]}" rx="8"/>')
     lines.append(f'<rect x="0" y="{HEADER_HEIGHT - 8}" width="{CARD_WIDTH}" height="8" fill="{c["header_bg"]}"/>')
-    lines.append(f'<text font-family="monospace" font-size="13" fill="{c["header_text"]}" x="{PADDING}" y="{HEADER_HEIGHT - 12}">╭─ {CARD_CONFIG["username"]}@github ─╮</text>')
+    lines.append(f'<text font-family="monospace" font-size="13" fill="{c["header_text"]}" x="{PADDING}" y="{HEADER_HEIGHT - 12}">[{CARD_CONFIG["username"]}@github]</text>')
 
     # Content
     content = [
@@ -42,8 +42,8 @@ def generate_info_card_svg() -> str:
         ("Stack:", CARD_CONFIG["stack"]),
         ("Focus:", CARD_CONFIG["current_focus"]),
         ("Learning:", CARD_CONFIG["learning"]),
-        ("✓", CARD_CONFIG["highlight1"]),
-        ("✓", CARD_CONFIG["highlight2"]),
+        ("&gt;", CARD_CONFIG["highlight1"]),
+        ("&gt;", CARD_CONFIG["highlight2"]),
     ]
 
     y_start = HEADER_HEIGHT + PADDING

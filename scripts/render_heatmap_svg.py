@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Render contribution heatmap SVG - static version that GitHub will display."""
+"""Render contribution heatmap SVG - static, visible, GitHub-compatible."""
 
 import json
-import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
-PALETTE = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353", "#69f0a0"]
+# Use lighter "empty" color so cells are visible even with 0 contributions
+PALETTE = ["#21262d", "#0e4429", "#006d32", "#26a641", "#39d353"]
 CELL_SIZE = 13
 CELL_GAP = 3
 CELL_ROUND = 2
@@ -32,7 +32,8 @@ def generate_heatmap_svg(data: dict) -> str:
 
     lines = []
     lines.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}" width="{SVG_WIDTH}" height="{SVG_HEIGHT}">')
-    lines.append(f'<rect width="100%" height="100%" fill="#0d1117"/>')
+    # Lighter background so empty cells are visible
+    lines.append(f'<rect width="100%" height="100%" fill="#161b22"/>')
 
     # Day labels
     for i, label in enumerate(["", "Mon", "", "Wed", "", "Fri", ""]):
@@ -50,7 +51,7 @@ def generate_heatmap_svg(data: dict) -> str:
             x = MARGIN_LEFT + week * (CELL_SIZE + CELL_GAP)
             lines.append(f'<text font-family="monospace" font-size="10" fill="#8b949e" x="{x}" y="{MARGIN_TOP - 8}">{month}</text>')
 
-    # Cells - NO animation, just static
+    # Cells
     for week in range(WEEKS):
         for day in range(DAYS):
             cell_date = start_date + timedelta(weeks=week, days=day)
