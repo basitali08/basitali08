@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 """Generate a neofetch-style info card SVG.
 
-Features:
-- Terminal-style header bar
-- Colored key/value rows
-- Line-by-line fade-in animation
-- STATIC=1 env var for frozen preview
+Uses SMIL animations so GitHub renders them in <img> tags.
 """
 
 import os
@@ -32,11 +28,10 @@ PADDING = 24
 HEADER_HEIGHT = 36
 
 
-def generate_info_card_svg(static: bool = False) -> str:
-    """Generate the info card SVG."""
+def generate_info_card_svg() -> str:
+    """Generate the info card SVG with SMIL animations."""
     lines = []
 
-    # Color palette
     colors = {
         "bg": "#0d1117",
         "header_bg": "#161b22",
@@ -47,70 +42,19 @@ def generate_info_card_svg(static: bool = False) -> str:
         "border": "#30363d",
     }
 
-    # SVG header
-    lines.append(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {CARD_WIDTH} {CARD_HEIGHT}" width="{CARD_WIDTH}" height="{CARD_HEIGHT}">
-  <defs>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-  <style>
-    @keyframes fadeInSlide {{
-      from {{
-        opacity: 0;
-        transform: translateY(8px);
-      }}
-      to {{
-        opacity: 1;
-        transform: translateY(0);
-      }}
-    }}
-    .line {{
-      opacity: 0;
-      animation: fadeInSlide 0.3s ease forwards;
-      animation-delay: var(--delay);
-    }}
-    .line.revealed {{
-      opacity: 1;
-    }}
-    .header {{
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      fill: {colors["header_text"]};
-    }}
-    .key {{
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      fill: {colors["key"]};
-      font-weight: bold;
-    }}
-    .value {{
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      fill: {colors["value"]};
-    }}
-    .separator {{
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      fill: {colors["accent"]};
-    }}
-  </style>
-''')
+    # SVG header - no <style> block
+    lines.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {CARD_WIDTH} {CARD_HEIGHT}" width="{CARD_WIDTH}" height="{CARD_HEIGHT}">')
 
     # Background
-    lines.append(f'  <rect width="100%" height="100%" fill="{colors["bg"]}" rx="8"/>')
-    lines.append(f'  <rect x="1" y="1" width="{CARD_WIDTH-2}" height="{CARD_HEIGHT-2}" fill="none" stroke="{colors["border"]}" stroke-width="1" rx="7"/>')
+    lines.append(f'<rect width="100%" height="100%" fill="{colors["bg"]}" rx="8"/>')
+    lines.append(f'<rect x="1" y="1" width="{CARD_WIDTH-2}" height="{CARD_HEIGHT-2}" fill="none" stroke="{colors["border"]}" stroke-width="1" rx="7"/>')
 
     # Header bar
-    lines.append(f'  <rect x="0" y="0" width="{CARD_WIDTH}" height="{HEADER_HEIGHT}" fill="{colors["header_bg"]}" rx="8"/>')
-    lines.append(f'  <rect x="0" y="{HEADER_HEIGHT - 8}" width="{CARD_WIDTH}" height="8" fill="{colors["header_bg"]}"/>')
-    lines.append(f'  <text class="header" x="{PADDING}" y="{HEADER_HEIGHT - 12}">╭─ {CARD_CONFIG["username"]}@github ─╮</text>')
+    lines.append(f'<rect x="0" y="0" width="{CARD_WIDTH}" height="{HEADER_HEIGHT}" fill="{colors["header_bg"]}" rx="8"/>')
+    lines.append(f'<rect x="0" y="{HEADER_HEIGHT - 8}" width="{CARD_WIDTH}" height="8" fill="{colors["header_bg"]}"/>')
+    lines.append(f'<text font-family="monospace" font-size="13" fill="{colors["header_text"]}" x="{PADDING}" y="{HEADER_HEIGHT - 12}">╭─ {CARD_CONFIG["username"]}@github ─╮</text>')
 
-    # Content lines
+    # Content lines with SMIL fade-in
     content_lines = [
         ("Name:", CARD_CONFIG["name"]),
         ("Role:", CARD_CONFIG["role"]),
@@ -124,27 +68,26 @@ def generate_info_card_svg(static: bool = False) -> str:
 
     y_start = HEADER_HEIGHT + PADDING
     for i, (key, value) in enumerate(content_lines):
-        delay = 0.5 + i * 0.15 if not static else 0
+        delay = 0.5 + i * 0.15
         y = y_start + i * LINE_HEIGHT
 
-        lines.append(f'  <g class="line" style="--delay: {delay:.2f}s">')
-        lines.append(f'    <text class="key" x="{PADDING}" y="{y}">{key}</text>')
-        lines.append(f'    <text class="value" x="{PADDING + 80}" y="{y}">{value}</text>')
-        lines.append(f'  </g>')
+        # Group with SMIL animation
+        lines.append(f'<g opacity="0">')
+        lines.append(f'<animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="{delay:.2f}s" fill="freeze"/>')
+        lines.append(f'<text font-family="monospace" font-size="13" fill="{colors["key"]}" font-weight="bold" x="{PADDING}" y="{y}">{key}</text>')
+        lines.append(f'<text font-family="monospace" font-size="13" fill="{colors["value"]}" x="{PADDING + 80}" y="{y}">{value}</text>')
+        lines.append(f'</g>')
 
-    # Footer
-    lines.append(f'  <line x1="{PADDING}" y1="{CARD_HEIGHT - PADDING}" x2="{CARD_WIDTH - PADDING}" y2="{CARD_HEIGHT - PADDING}" stroke="{colors["border"]}" stroke-width="1"/>')
+    # Footer line
+    lines.append(f'<line x1="{PADDING}" y1="{CARD_HEIGHT - PADDING}" x2="{CARD_WIDTH - PADDING}" y2="{CARD_HEIGHT - PADDING}" stroke="{colors["border"]}" stroke-width="1"/>')
 
     lines.append('</svg>')
-
     return '\n'.join(lines)
 
 
 def main():
-    static = os.environ.get("STATIC", "0") == "1"
-
     print("Generating info card SVG...")
-    svg_content = generate_info_card_svg(static)
+    svg_content = generate_info_card_svg()
 
     output_path = "info-card.svg"
     with open(output_path, "w", encoding="utf-8") as f:
