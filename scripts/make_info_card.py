@@ -4,13 +4,13 @@
 CARD_CONFIG = {
     "name": "Basit Ali",
     "username": "basitali08",
-    "role": "Full Stack Developer",
+    "role": "Full Stack Developer | AI Builder",
     "location": "Pakistan",
-    "stack": "Python, JavaScript, React, Node.js",
-    "current_focus": "AI/ML & Web Dev",
-    "learning": "LangChain, FastAPI",
+    "stack": "Python, JavaScript, React, Node.js, FastAPI",
+    "current_focus": "AI/ML & Web Development",
+    "learning": "LangChain, Vector Databases, LLMs",
     "highlight1": "Open Source Contributor",
-    "highlight2": "Building cool stuff",
+    "highlight2": "AI & Full-Stack Projects",
 }
 
 CARD_WIDTH = 480
